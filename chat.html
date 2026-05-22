@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+
+    <title>Cipher Ai</title>
+
+    <link rel="icon" type="image/png" href="assets/logo.png">
+
+    <meta name="description" content="Cipher Ai — Chat with any major AI API using one clean interface.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
+
+</head>
+
+<body dir="ltr">
+
+    <div id="app-shell">
+
+        <div class="toolbar-zone">
+            <header class="top-toolbar">
+                <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <line x1="4" y1="6" x2="20" y2="6"/>
+                        <line x1="4" y1="12" x2="20" y2="12"/>
+                        <line x1="4" y1="18" x2="20" y2="18"/>
+                    </svg>
+                </button>
+                <span class="toolbar-brand-name">Cipher AI</span>
+                <span class="toolbar-spacer" aria-hidden="true"></span>
+            </header>
+        </div>
+
+
+
+        <div id="app-container">
+
+            <div id="empty-state" class="empty-state">
+
+                <div class="hero">
+                    <div class="hero-brand">
+                        <img src="assets/logo.png" alt="Cipher Ai" class="brand-logo hero-logo" width="80" height="80">
+                        <h1 class="hero-title">Cipher AI</h1>
+                    </div>
+                    <p class="hero-tagline">One interface. Any API.</p>
+
+                    <div class="provider-badges" aria-label="Supported providers">
+
+                        <span class="provider-badge">OpenAI</span>
+
+                        <span class="provider-badge">Claude</span>
+
+                        <span class="provider-badge">DeepSeek</span>
+
+                        <span class="provider-badge">Gemini</span>
+
+                        <span class="provider-badge">OpenRouter</span>
+
+                    </div>
+
+                </div>
+
+                <div class="input-wrapper empty-input-wrap">
+                    <button id="send-button-empty" type="button" class="send-button inactive" disabled aria-label="Send">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="m5 12 7-7 7 7"/><path d="M12 19V5"/>
+                        </svg>
+                    </button>
+                    <textarea id="message-input-empty" placeholder="Message Cipher Ai…" rows="1" dir="auto"></textarea>
+                </div>
+
+            </div>
+
+
+
+            <div id="chat-view" class="hidden">
+
+                <div class="chat-area" id="chat-area">
+
+                    <div id="messages-list"></div>
+
+                </div>
+
+                <div class="input-container" id="input-container">
+
+                    <div class="input-wrapper">
+                        <button id="send-button-chat" type="button" class="send-button inactive" disabled aria-label="Send">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="m5 12 7-7 7 7"/><path d="M12 19V5"/>
+                            </svg>
+                        </button>
+                        <textarea id="message-input-chat" placeholder="Message Cipher Ai…" rows="1" dir="auto"></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <div class="sidebar-brand">
+
+                <img src="assets/logo.png" alt="" class="brand-logo sidebar-logo-img" width="40" height="40">
+
+                <div>
+
+                    <div class="sidebar-title">Cipher AI</div>
+
+                    <div class="sidebar-subtitle">Chat history</div>
+
+                </div>
+
+            </div>
+
+            <button class="sidebar-close" id="sidebar-close" type="button" aria-label="Close menu">
+
+                <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+
+            </button>
+
+        </div>
+
+        <button class="new-chat-btn-sidebar" id="new-chat-sidebar" type="button">
+
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+
+            </svg>
+
+            New chat
+
+        </button>
+
+        <div class="sidebar-section-label">Recent</div>
+
+        <div class="sidebar-chats" id="sidebar-chats-list">
+
+            <div class="sidebar-empty">No chats yet<span>Send a message to save one</span></div>
+
+        </div>
+
+        <div class="sidebar-footer">
+
+            <div class="api-key-card">
+
+                <div class="api-key-card-head">
+
+                    <span class="api-key-title">API key</span>
+
+                    <span class="api-key-subtitle">Auto-detects provider</span>
+
+                </div>
+
+                <div class="api-key-field">
+
+                    <input type="password" id="api-key-input" class="api-key-input" placeholder="Paste key…" autocomplete="off" spellcheck="false">
+
+                    <button type="button" class="api-key-toggle" id="api-key-toggle" aria-label="Show API key">
+
+                        <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+
+                        <svg class="icon-eye-off hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+
+                    </button>
+
+                </div>
+
+                <p class="api-key-status" id="api-key-status">No API key</p>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages.min.js"></script>
+
+    <script src="js/content-parser.js"></script>
+
+    <script src="js/text-formatter.js"></script>
+
+    <script src="js/highlighter.js"></script>
+
+    <script src="js/providers/_shared.js"></script>
+
+    <script src="js/providers/openrouter.js"></script>
+
+    <script src="js/providers/openai.js"></script>
+
+    <script src="js/providers/anthropic.js"></script>
+
+    <script src="js/providers/deepseek.js"></script>
+
+    <script src="js/providers/gemini.js"></script>
+
+    <script src="js/providers/index.js"></script>
+    <script src="js/brand-filter.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
+
+
